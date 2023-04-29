@@ -8,11 +8,11 @@ export default function ContactEl({ contact }) {
   const dispatch = useDispatch();
 
   const delFunc = e => {
-    dispatch(delContact(e.target.parentNode.dataset.key));
+    dispatch(delContact(contact.id));
   };
 
   return (
-    <Card data-key={contact.id}>
+    <Card>
       <Delete type="button" onClick={delFunc}>
         X
       </Delete>
