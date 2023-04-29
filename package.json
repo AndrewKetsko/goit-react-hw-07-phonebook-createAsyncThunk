@@ -4,6 +4,9 @@
   "private": true,
   "homepage": "https://AndrewKetsko.github.io/goit-react-hw-06-phonebook/",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
+    "redux-persist": "^6.0.0",
+    "react-redux": "^8.0.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "nanoid": "^4.0.1",
