@@ -1,16 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Input, Name } from './FilterField.styled';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { filterContacts } from 'components/redux/slice';
 
-export const FilterField = ({ searchFunc }) => {
+
+export const FilterField = () => {
+
+  const searchValue = useSelector(state => state.phonebook.filter);
+  const dispatch = useDispatch();
+
+  const searchFunc = e => dispatch(filterContacts(e.target.value.toLowerCase()));
+
   return (
     <>
       <Name htmlFor="search">Find contacts by name</Name>
-      <Input type="text" name="filter" onInput={searchFunc} />
+      <Input type="text" name="filter" onInput={searchFunc} value={searchValue}/>
     </>
   );
-};
-  
-FilterField.propTypes = {
-  searchFunc: PropTypes.func.isRequired
 };

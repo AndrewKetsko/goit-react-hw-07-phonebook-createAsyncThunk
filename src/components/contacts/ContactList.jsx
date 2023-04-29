@@ -1,9 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import ContactEl from './ContactEl';
 import { Element, List } from './ContactList.styled';
+import { useSelector } from 'react-redux';
 
-export default function ContactList({ contacts, filter, delFunc }) {
+export default function ContactList() {
+  const contacts = useSelector(state => state.phonebook.contacts);
+  const filter = useSelector(state => state.phonebook.filter);
+
   return (
     <>
       <List>
@@ -14,17 +17,12 @@ export default function ContactList({ contacts, filter, delFunc }) {
           .map(contact => {
             return (
               <Element key={contact.id}>
-                <ContactEl contact={contact} delFunc={delFunc} />
+                <ContactEl contact={contact} />
               </Element>
             );
           })}
       </List>
     </>
   );
-};
+}
 
-ContactList.propTypes = {
-  contacts: PropTypes.array.isRequired,
-  filter: PropTypes.string.isRequired,
-  delFunc: PropTypes.func.isRequired
-};
