@@ -7,7 +7,7 @@ import { deleteContact } from 'components/redux/query';
 export default function ContactEl({ contact }) {
   const dispatch = useDispatch();
 
-  const delFunc = e => dispatch(deleteContact(contact.id));
+  const delFunc = () => dispatch(deleteContact(contact.id));
 
   return (
     <Card>

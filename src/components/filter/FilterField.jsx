@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { filterContacts } from 'components/redux/slice';
 
 export const FilterField = () => {
-  const searchValue = useSelector(state => state.contacts.filter);
+  const searchValue = useSelector(state => state.filter.filter);
   const dispatch = useDispatch();
   const searchFunc = e =>
     dispatch(filterContacts(e.target.value.toLowerCase()));
