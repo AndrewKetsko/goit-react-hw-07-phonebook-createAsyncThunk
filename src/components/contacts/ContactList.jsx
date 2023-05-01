@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ContactEl from './ContactEl';
 import { Element, List } from './ContactList.styled';
-import { useSelector } from 'react-redux';
-import { useGetContactsQuery } from 'components/redux/query';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from 'components/redux/query';
 
 export default function ContactList() {
-  // const contacts = useSelector(state => state.phonebook.contacts);
-  const filter = useSelector(state => state.filter.filter);
+  const contacts = useSelector(state => state.contacts.contacts.items);
+  const isLoading = useSelector(state => state.contacts.contacts.isLoading);
+  const filter = useSelector(state => state.contacts.filter);
+  const dispatch = useDispatch();
 
-  const { data = []} = useGetContactsQuery();
+  useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
+
   return (
     <>
+      {isLoading && <p>Is Loading</p>}
       <List>
-        {data
+        {contacts
           .filter(contact => {
             return contact.name.toLowerCase().includes(filter);
           })
@@ -27,4 +33,3 @@ export default function ContactList() {
     </>
   );
 }
-

@@ -1,33 +1,46 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-export const phoneBookApi = createApi({
-  reducerPath: 'phoneBookApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://644f70c6b61a9f0c4d22c00a.mockapi.io/api/',
-  }),
-  endpoints: builder => ({
-    getContacts: builder.query({
-      query: () => 'contacts',
-      providesTags: [{ type: 'Contacts' }],
-    }),
+export const getContacts = createAsyncThunk(
+  'contacts/fetch',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        'https://644f70c6b61a9f0c4d22c00a.mockapi.io/api/contacts'
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
-    delContact: builder.mutation({
-      query: id => ({
-        url: `contacts/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Contacts'],
-    }),
+export const addContact = createAsyncThunk(
+  'contacts/add',
+  async (data, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        'https://644f70c6b61a9f0c4d22c00a.mockapi.io/api/contacts',
+        { "name": data.name, "phone": data.phone}
+      );
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
 
-    addContact: builder.mutation({
-      query: ({ name, phone }) => ({
-        url: `contacts`,
-        method: 'POST',
-        body: { name, phone },
-      }),
-      invalidatesTags: ['Contacts'],
-    }),
-  }),
-});
-
-export const { useGetContactsQuery, useDelContactMutation, useAddContactMutation } = phoneBookApi;
+export const deleteContact = createAsyncThunk(
+  'contacts/delete',
+  async (contactId, thunkAPI) => {
+    try {
+      const response = await axios.delete(
+        `https://644f70c6b61a9f0c4d22c00a.mockapi.io/api/contacts/${contactId}`
+      );
+      return response.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);

@@ -1,12 +1,11 @@
 import React from 'react';
 import { Input } from '../filter/FilterField.styled';
 import { Button, PhoneBook } from './Form.styled';
-// import { useDispatch } from 'react-redux';
-import { useAddContactMutation } from 'components/redux/query';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'components/redux/query';
 
 export const Form = () => {
-  const [addContact] = useAddContactMutation();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const submitForm = e => {
     e.preventDefault();
@@ -14,7 +13,7 @@ export const Form = () => {
       name: e.target.name.value,
       phone: e.target.number.value,
     };
-    addContact(contact);
+    dispatch(addContact(contact));
     e.currentTarget.reset();
   };
 

@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Delete, Card, Name, Tel } from './ContactEl.styled';
-// import { useDispatch } from 'react-redux';
-// import { delContact } from 'components/redux/slice';
-import { useDelContactMutation } from 'components/redux/query';
+import { useDispatch } from 'react-redux';
+import { deleteContact } from 'components/redux/query';
 
 export default function ContactEl({ contact }) {
-  // const dispatch = useDispatch();
-  const [delContact] = useDelContactMutation();
+  const dispatch = useDispatch();
 
-  const delFunc = e => {
-    delContact(contact.id);
-  };
+  const delFunc = e => dispatch(deleteContact(contact.id));
 
   return (
     <Card>
