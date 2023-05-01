@@ -1,22 +1,20 @@
 import React from 'react';
 import { Input } from '../filter/FilterField.styled';
 import { Button, PhoneBook } from './Form.styled';
-import { useDispatch } from 'react-redux';
-import { nanoid } from 'nanoid';
-import { addContact } from 'components/redux/slice';
+// import { useDispatch } from 'react-redux';
+import { useAddContactMutation } from 'components/redux/query';
 
 export const Form = () => {
-
-  const dispatch = useDispatch();
+  const [addContact] = useAddContactMutation();
+  // const dispatch = useDispatch();
 
   const submitForm = e => {
     e.preventDefault();
     const contact = {
-      id: nanoid(),
       name: e.target.name.value,
-      number: e.target.number.value,
+      phone: e.target.number.value,
     };
-    dispatch(addContact(contact));
+    addContact(contact);
     e.currentTarget.reset();
   };
 
