@@ -1,14 +1,19 @@
 import React from 'react';
 import { Input } from '../filter/FilterField.styled';
 import { Button, PhoneBook } from './Form.styled';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'components/redux/query';
 
 export const Form = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.items);
 
   const submitForm = e => {
     e.preventDefault();
+    if (contacts.find(contact => contact.name === e.target.name.value)) {
+      alert('You have this contact already');
+      return e.currentTarget.reset();
+    }
     const contact = {
       name: e.target.name.value,
       phone: e.target.number.value,
